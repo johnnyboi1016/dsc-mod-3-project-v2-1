@@ -22,68 +22,91 @@ This data contains information about people involved in a crash and if any injur
 ## Data Cleaning, Exploration, Transformation
 This portion of the project lived up to the cliche we are so familiar with: cleaning and prep work before modeling takes up 80% of a data scientist's time. This was definitely true for me this project, despite having a dataset already fairly 'clean' and updated near daily by the City of Chicago.
 
-I adopted a balanced mindset of simplifying features and their values in regards to how different events, elements, values should be separated when examined as a contributing factor to a severe crash. Boiling down a large spread of values to a few with relative significance behind them would vary wildly depending on the eye of the beholder. This is where a data scientist's domain knowledge and personal biases could heavily influence how this part of the process is performed. In the end, being able to explain and understand why a feature was changed, removed or added is paramount to properly interpreting the modeling results.
+I adopted a balanced mindset of simplifying features and their values in regards to how different events, elements, values should be separated when examined as a contributing factor to a severe crash. The goal was to treat every feature as categorical - binary if possible. Boiling down a large spread of values to a few with relative significance behind them could vary greatly depending on the eye of the beholder. This is where a data scientist's domain knowledge and personal biases would heavily influence how this part of the process is performed. In the end, being able to explain and understand why a feature was changed, removed or added is paramount to properly interpreting the modeling results.
 
 ## Final list of curated features and binned values:
 
-`POSTED_SPEED_LIMIT` - low: 0-15mph; med: 16-45; high: 46+ mph
+`POSTED_SPEED_LIMIT` - **low**: 0-15, **med**: 16-45, **high**: 46+ mph
 
-`WEATHER_CONDITION` - CLEAR, CLOUDY/RAIN, SNOW/ICY, UNKNOWN/OTHER, FOG/SMOKE/HAZE, SEVERE_WINDS
+`WEATHER_CONDITION` - **CLEAR, CLOUDY/RAIN, SNOW/ICY, UNKNOWN/OTHER, FOG/SMOKE/HAZE, SEVERE_WINDS**
 
-`LIGHTING_CONDITION` - DAYLIGHT, (DARKNESS, LIGHTED ROAD), DARKNESS, DUSK, DAWN
+`LIGHTING_CONDITION` - **DAYLIGHT, (DARKNESS, LIGHTED ROAD), DARKNESS, DUSK, DAWN**
 
-`FIRST_CRASH_TYPE` - PARKED/FIXED, TURN/ANGLE, REAR/NONCOL, SIDESWIPE, PED/CYCLE/OTHER, HEAD/OVER/TRAIN
+`FIRST_CRASH_TYPE` - **PARKED/FIXED, TURN/ANGLE, REAR/NONCOL, SIDESWIPE, PED/CYCLE/OTHER, HEAD/OVER/TRAIN**
 
-`LANE_CNT` - -1: null/unknown, 0: intersection, 1, 2, 3, 4, 5, 6: six lanes or more
+`LANE_CNT` - **(-1)**: null/unknown, **0**: intersection, **1, 2, 3, 4, 5, 6** (six lanes or more)
 
-`ALIGNMENT` - (of the road) STRAIGHT, CURVE, HILLCREST
+`ALIGNMENT` (of the road) - **STRAIGHT, CURVE, HILLCREST**
 
-`ROADWAY_SURFACE_COND` - DRY, WET, UNKNOWN/OTHER, SNOW/ICE/SAND
+`ROADWAY_SURFACE_COND` - **DRY, WET, UNKNOWN/OTHER, SNOW/ICE/SAND**
 
-`ROAD_DEFECT` - NO DEFECTS, UNKNOWN/OTHER/DEBRIS, WORN/SHOULDER/RUT
+`ROAD_DEFECT` - **NO DEFECTS, UNKNOWN/OTHER/DEBRIS, WORN/SHOULDER/RUT**
 
-`REPORT_TYPE` = 0: not on scene, desk report; 1: on scene report
+`REPORT_TYPE` = **0**: not on scene, desk report; **1**: on scene report
 
-`HIT_AND_RUN_I` - 0: no; 1: yes
+`HIT_AND_RUN_I` - **0**: no, **1**: yes
 
-`DAMAGE` - OVER $1,500, $1500 OR LESS
+`DAMAGE` - **OVER $1,500, $1500 OR LESS**
 
-`STREET_DIRECTION` - S/W (sunset), N/E (sunrise)
+`STREET_DIRECTION` - **S/W** (sunset), **N/E** (sunrise)
 
-`NUM_UNITS` - unit=object with velocity; 1, 2, 3: three or more
+`NUM_UNITS` (unit=object with velocity) - **1, 2, 3** (three or more)
 
-`INJURIES_TOTAL` - 0: none; 1, 2, 3: three or more injuries
+`INJURIES_TOTAL` - **0**: none, **1, 2, 3** (three or more injuries)
 
-`CRASH_HOUR` - DAWN (5a-7a), DAY (10a-4p), DUSK (5p-7p), NIGHT (8p-4a)
+`CRASH_HOUR` - **DAWN** (5a-7a), **DAY** (10a-4p), **DUSK** (5p-7p), **NIGHT** (8p-4a)
 
-`CRASH_DAY_OF_WEEK` - WORK (Mon-Thu), LEISURE (Fri-Sun)
+`CRASH_DAY_OF_WEEK` - **WORK** (Mon-Thu), **LEISURE** (Fri-Sun)
 
-`CRASH_MONTH` - COLD (Nov-Feb), MILD (Mar/Apr/May/Oct), HOT (Jun-Sep)
+`CRASH_MONTH` - **COLD** (Nov-Feb), **MILD** (Mar/Apr/May/Oct), **HOT** (Jun-Sep)
 
-`POL_NOTIFY_TIME` - QUICK (0-10 minutes), LOW (11-30), MID (31-120), HIGH (120+ minutes)
+`POL_NOTIFY_TIME` - **QUICK** (0-10), **LOW** (11-30), **MID** (31-120), **HIGH** (120+ minutes)
 
-`NO_TCD` - 0: no traffic control device, 1: TCD present
+`NO_TCD` - **0**: no traffic control device, **1**: TCD present
 
-`NON_DRIVERS` - 0: no other people aside from drivers involved in crash, 1: passengers/pedestrians/bicyclists/etc. present
+`NON_DRIVERS` - **0**: no other people aside from drivers involved in crash, **1**: passengers/pedestrians/bicyclists/etc. present
 
-`OOSTATE`: 0: all drivers have an IL state license, 1: out of state drivers present
+`OOSTATE`: **0**: all drivers involved have an IL state license, **1**: out of state drivers present
 
-`WEIGHT_DIFF` - 0: only passenger cars (3-4000 lbs) involved, 1: at least one heavy (truck, bus) or light (motorcycle) vehicle present
+`WEIGHT_DIFF` - **0**: only passenger cars (3-4000 lbs) involved, **1**: at least one heavy (truck, bus) or light (motorcycle) vehicle present
 
-`SPEEDING` - 0: no speeding suspected, 1: excessive speed determined to be contributing factor in crash
+`SPEEDING` - **0**: no speeding suspected, **1**: excessive speed determined by officer to be contributing factor in crash
 
-`UNDER25` - 0: all drivers are 25 and older, 1: at least one under 25 driver involved
+`UNDER25` - **0**: all drivers are 25 and older, **1**: at least one under 25 driver involved
 
-`ALCOHOL` - 0: none suspected, 1: alcohol involvement suspected, sobriety test requested or administered
+`ALCOHOL` - **0**: none, **1**: alcohol involvement suspected, sobriety test requested or administered
 
-`AIRBAG` - 0: no airbags deployed, 1: at least one airbag deployed
+`AIRBAG` - **0**: none, **1**: at least one airbag deployed
 
-`EJECTION` - 0: no people ejection/trapped, 1: at least one person ejected from vehicle / trapped in vehicle
+`EJECTION` - **0**: none, **1**: at least one person ejected from vehicle / trapped in vehicle
 
 ## Modeling
-We discussed the class imbalance present in this dataset due to the rarity of severe crashes (<2%). This imbalance presented itself in the variety of metric scores we observed for accuracy, precision, recall and F1 score. We explored Logistic Regression models, feature selection using the Chi-Squared Test, Decision Trees, Random Forests, boosting algorithms and attempted to build a Support Vector Machine model.
+We discussed the class imbalance present in this dataset due to the rarity of severe crashes (<2%). This imbalance presented itself in the variety of metric scores observed for accuracy, precision, recall and F1 score. We explored Logistic Regression models, feature selection using the Chi-Squared Test, Decision Trees, Random Forests, boosting algorithms and attempted to build a Support Vector Machine model.
 
 In the end, the least sophisticated (and quickest to build regarding CPU time) logistic regression model fared best in maximizing the metric we were looking for: recall. This is because in the real world business case of this project, predicting every actual severe crash as correctly as possible was more important than anything else. We achieved a 98% recall rate which came at the cost of precision, which lowered to 14% (highest observed precision score was 71% with AdaBoost).
 
-In terms of thinking about the methodology each model used, it makes sense that a model based on probabilities was best suited to our real world application of a rare prediction riddled with noise, despite having such a large dataset. It goes to show that in machine learning models - bigger isn't always better and complex isn't always better than simple.
+In terms of thinking about the methodology each model used, it makes sense that a model based on probabilities was best suited to our real world application of a rare prediction riddled with noise, despite having such a large dataset. It goes to show that in machine learning models - newer and complex isn't always better than older and simple.
 
+## Recommendations
+
+When examining the top 10 features for predicting severe crashes, most would agree that they do not come as a surprise.
+
+`INJURIES_TOTAL` - a higher number of total injuries in a single crash would often be associated with higher speeds, multiple units involved, multiple passengers which increase the chance of at least one incapacitating injury or fatality.   
+`FIRST_CRASH_TYPE_PED/CYCLE/OTHER` - initial impact between 2 units involving a pedestrian or bicyclist.   
+`EJECTION` - at least one ejection from or trapped in vehicle.   
+`POL_NOTIFY_TIME_QUICK` - 10 minutes or less between actual event and the 911 call reporting it.   
+`DAMAGE_OVER $1,500` - this fairly low threshold doesn't tell us too much but clearly higher overall damage costs would be relevant.   
+`ALCOHOL` - millions of dollars have been invested in campaigns and laws to mitigate the driving risks after drinking.   
+`POL_NOTIFY_TIME_LOW` - same as above, less than 30 minutes (and over 10).   
+`SPEEDING` - difficult to prove but clearly a relevant factor where risks rise exponentially with each additional mph.   
+`REPORT_TYPE` - police reports collected and generated on scene (dispatched immediately after 911 call) would definitely be more associated with severe crashes than those performed at a desk.   
+`AIRBAG` - deployment set to occur at impact speeds above 10-15 mph where experts have determined risk of high injury / death becomes way more likely.   
+                     
+The only recommendation we would make to the City of Chicago is to see if further improvements can be made to decrease crashes involving pedestrians / bicyclists. Due to the large weight disparity and relative nakedness of a person not protected by a surrounding metal structure, it is obvious that ANY reportable crash involving non-vehicles carry a much higher risk of severe injury. Additional traffic control devices, road/sign markings, audio/visual warnings and awareness campaigns are possible avenues to explore.
+
+From how consistent the number of total AND severe crashes have been during the relevant time period (Sep 2017 - Feb 2020), we would conclude that the city is already quite 'mature' when it comes to maximizing safety and minimizing crash severity. The mandated seatbelt laws, inclusion of airbags, other vehicle safety equipment, past alcohol awareness campaigns (MADD) have all served to drop this statistic historically low (nationwide). It is very likely that this ~2% severe crash rate represents a probability that can never go away because it is tied to an element we cannot eliminate: human error. We all get tired, emotional, distracted and make mistakes which is part of being human, but this translates into crashes - both severe and non-severe. More often than not, the factors that led to a crash being severe could not have been prevented nor predicted. Of the ones that could have been predicted, many measures have already been put in place.
+                                                                                                    
+Another 'soft' recommendation we could make, which would be interesting to compare crash statistics before and after: embrace the revolution of self-driving cars! (Once they definitively prove that they are much safer and less error prone than human drivers, of course.)
+                                                                                                    
+## Future Work
+With more time and computing resources available, we would look into including more features and exploring more models, along with preserving initial data values as much as possible. Some features with numbered values could have been treated ordinally to see if that resulted in model improvements. Including the geographical and specific location data (streets, latitude, longitude, police beat/district) could have changed the baseline approach of this project where maybe we build many models that narrow down to neighborhoods instead of the city as a whole and be able to provide more specific and tailored recommendations.
