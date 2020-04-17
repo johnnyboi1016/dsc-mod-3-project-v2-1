@@ -4,8 +4,7 @@
 * Student name: John Cho
 * Student pace: full time online
 * Instructor name: Rafael Carrasco
-* Blog post URL:
-
+* Blog post URL: https://medium.com/@johnnyboyee/cars-crashes-and-chicago-e78302c9c861
 
 ## From City of Chicago's Data Portal: [link](https://data.cityofchicago.org/Transportation/Traffic-Crashes-Crashes/85ca-t3if)
 ### Traffic Crashes - Crashes:
